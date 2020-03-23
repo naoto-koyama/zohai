@@ -3,10 +3,9 @@ services:
   db:
     image: postgres
     ports:
-      - 5555:5432
+      - 5432:5432
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgrespass
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
     volumes:
       - kabu_db:/var/lib/postgresql/data
 
