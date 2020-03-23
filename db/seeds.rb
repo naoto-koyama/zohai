@@ -1,3 +1,7 @@
+require 'factory_bot'
+include FactoryBot::Syntax::Methods
+FactoryBot.definition_file_paths = [ Rails.root.join('spec', 'factories') ]
+FactoryBot.reload
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
