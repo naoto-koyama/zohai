@@ -10,16 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_23_044627) do
+ActiveRecord::Schema.define(version: 2020_03_23_081439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "companies", force: :cascade do |t|
-    t.text "code"
-    t.text "name"
+    t.text "code", null: false
+    t.text "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "company_fiscal_years", force: :cascade do |t|
+    t.bigint "company_id"
+    t.bigint "fiscal_year_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_company_fiscal_years_on_company_id"
+    t.index ["fiscal_year_id"], name: "index_company_fiscal_years_on_fiscal_year_id"
+  end
+
+  create_table "dividends", force: :cascade do |t|
+    t.bigint "company_fiscal_year_id"
+    t.decimal "indicated_dividend", precision: 6, scale: 4, null: false
+    t.bigint "surplus_dividend", null: false
+    t.bigint "buyback", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_fiscal_year_id"], name: "index_dividends_on_company_fiscal_year_id"
+  end
+
+  create_table "fiscal_years", force: :cascade do |t|
+    t.date "fiscal_year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "company_fiscal_years", "companies"
+  add_foreign_key "company_fiscal_years", "fiscal_years"
+  add_foreign_key "dividends", "company_fiscal_years"
 end
