@@ -1,6 +1,5 @@
 class Api::DividendsController < ApplicationController
   def index
-    companies = Company.all
-    render json: companies
+    @companies = Company.order(:code)
   end
 end
