@@ -5,4 +5,8 @@ class Company < ApplicationRecord
   def latest_fiscal_year
     @latest_fiscal_year ||= fiscal_years.order_by_fiscal_year.first
   end
+
+  def latest_dividend
+    @latest_dividend ||= company_fiscal_years.order_by_fiscal_year.first.dividend
+  end
 end
