@@ -1,19 +1,23 @@
 <template>
   <div>
     <table>
-      <tbody>
+      <thead>
         <tr>
           <th>コード</th>
           <th>銘柄</th>
           <th>会計年度</th>
           <th>配当金</th>
+          <th>配当性向</th>
           <th>連続増配年数</th>
         </tr>
-        <tr v-for="company in companies" :key="company.id">
+      </thead>
+      <tbody>
+        <tr v-for="company in companies" :key="company.code">
           <td>{{company.code}}</td>
           <td>{{company.name}}</td>
           <td>{{company.latest_fiscal_year}}</td>
           <td>{{company.latest_dividend}}</td>
+          <td>{{company.payout_ratio}}</td>
           <td>{{company.continuous_dividend_increase_years}}</td>
         </tr>
       </tbody>
