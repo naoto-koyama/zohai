@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :company_fiscal_year do
-    company nil
+  factory :brand_fiscal_year do
+    brand nil
     fiscal_year nil
   end
 end
