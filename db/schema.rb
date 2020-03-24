@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_23_142005) do
+ActiveRecord::Schema.define(version: 2020_03_24_003759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_142005) do
     t.bigint "fiscal_year_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "continuous_dividend_increase_years", default: 0, null: false
     t.index ["company_id"], name: "index_company_fiscal_years_on_company_id"
     t.index ["fiscal_year_id"], name: "index_company_fiscal_years_on_fiscal_year_id"
   end
@@ -39,6 +38,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_142005) do
     t.bigint "buyback", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "continuous_dividend_increase_years", default: 0, null: false
     t.index ["company_fiscal_year_id"], name: "index_dividends_on_company_fiscal_year_id"
   end
 
