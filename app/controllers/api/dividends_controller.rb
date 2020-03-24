@@ -1,5 +1,5 @@
 class Api::DividendsController < ApplicationController
   def index
-    @companies = Company.order(:code)
+    @companies = Company.all
   end
 end
