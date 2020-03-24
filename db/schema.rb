@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_24_010341) do
+ActiveRecord::Schema.define(version: 2020_03_24_124021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2020_03_24_010341) do
     t.text "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_companies_on_code", unique: true
   end
 
   create_table "company_fiscal_years", force: :cascade do |t|
@@ -47,6 +48,7 @@ ActiveRecord::Schema.define(version: 2020_03_24_010341) do
     t.date "fiscal_year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["fiscal_year"], name: "index_fiscal_years_on_fiscal_year", unique: true
   end
 
   add_foreign_key "company_fiscal_years", "companies"
