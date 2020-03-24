@@ -1,3 +1,3 @@
 class Dividend < ApplicationRecord
-  belongs_to :company_fiscal_year
+  belongs_to :brand_fiscal_year
 end

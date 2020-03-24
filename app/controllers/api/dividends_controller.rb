@@ -1,5 +1,5 @@
 class Api::DividendsController < ApplicationController
   def index
-    @companies = Company.all
+    @brands = Brand.all
   end
 end
