@@ -21,8 +21,8 @@ ActiveRecord::Base.transaction do
   dividend = nil
   100.times do |n|
     company = create(:company,
-      code: Faker::Number.number(digits: 4).to_s,
-      name: Faker::Company.name)
+      code: Faker::Number.unique.number(digits: 4).to_s,
+      name: Faker::Company.unique.name)
 
     _continuous_dividend_increase_years = 0
     date_of_fiscal_year = Faker::Date.in_date_period.beginning_of_month
