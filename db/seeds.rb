@@ -22,7 +22,7 @@ ActiveRecord::Base.transaction do
   100.times do |n|
     brand = create(:brand,
       code: Faker::Number.unique.number(digits: 4).to_s,
-      name: Faker::brand.unique.name)
+      name: Faker::Company.unique.name)
 
     _continuous_dividend_increase_years = 0
     date_of_fiscal_year = Faker::Date.in_date_period.beginning_of_month
