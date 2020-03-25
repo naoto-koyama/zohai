@@ -10,4 +10,5 @@ end
 
 chdir APP_ROOT do
   system! 'bin/rails r db/seeds/brands.rb'
+  system! 'bin/rails r db/seeds/fiscal_years.rb'
 end
