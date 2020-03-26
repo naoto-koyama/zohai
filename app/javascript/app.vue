@@ -63,7 +63,6 @@ export default {
   },
   mounted () {
     this.LOAD_BRAND_LATEST_DIVIDEND()
-    this.sort('code')
   },
   methods : {
     ...mapActions(T),
