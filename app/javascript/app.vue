@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="brand in brands" :key="brand.code">
+        <tr v-for="brand in brands.slice(0, 100)" :key="brand.code">
           <td>{{brand.code}}</td>
           <td>{{brand.name}}</td>
           <td>{{brand.latest_fiscal_year}}</td>

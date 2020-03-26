@@ -5,5 +5,5 @@ class BrandFiscalYear < ApplicationRecord
 
   delegate :indicated_dividend, to: :dividend
   scope :filter_by_keys, ->(brand, fiscal_year) { where(brand: brand, fiscal_year: fiscal_year) }
-  scope :order_by_fiscal_year, -> { includes(:fiscal_year).order("fiscal_years.fiscal_year desc") }
+  scope :order_by_fiscal_year, ->(order = 'desc') { includes(:fiscal_year).order("fiscal_years.fiscal_year #{order}") }
 end
