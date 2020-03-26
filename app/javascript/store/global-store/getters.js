@@ -1,6 +1,8 @@
 export const getters = {
-  getHoge (state) {
-    console.log(state.searchStr)
-    return state.searchStr
+  getBrandLatestDividends(state) {
+    return state.brand_latest_dividends
+  },
+  getDividendTrends(state) {
+    return state.dividend_trends
   }
 }

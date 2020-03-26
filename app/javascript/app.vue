@@ -57,8 +57,6 @@ import { T } from './store/global-store/types.js'
 export default {
   data: function () {
     return {
-      brand_latest_dividends: [],
-      dividend_trends: [],
       sort_column: '',
       sort_order: 'asc',
       orderClass: {
@@ -92,28 +90,21 @@ export default {
   },
   computed: {
     ...mapGetters({
-      hogeTest: 'getHoge'
+      brand_latest_dividends: 'getBrandLatestDividends',
+      dividend_trends: 'getDividendTrends'
     })
   },
   mounted () {
-    axios
-      .get('/api/dividends.json')
-      .then(response => {
-        this.brand_latest_dividends = response.data
-        this.sort('code')
-      })
+    this.LOAD_BRAND_LATEST_DIVIDEND()
+    this.sort('code')
   },
   methods : {
     ...mapActions(T),
-    testHoge () {
-      console.log('testHoge click')
-      this.HOGE("hogehoge")
-    },
     sort (select_column) {
       this.sort_order = this.getSortOrder(select_column === this.sort_column)
       this.modifyOrderClass(select_column)
       this.sort_column = select_column
-      this.brand_latest_dividends = _.orderBy(this.brand_latest_dividends, this.sort_column, this.sort_order)
+      this.$store.brand_latest_dividends = _.orderBy(this.$store.brand_latest_dividends, this.sort_column, this.sort_order)
     },
     getSortOrder(isChangeOrder) {
       if (!isChangeOrder) {
@@ -132,11 +123,7 @@ export default {
       }
     },
     clickBrandName(id) {
-      axios
-        .get('/api/dividend_trends/' + id + '.json')
-        .then(response => {
-          this.dividend_trends = response.data
-        })
+      this.GET_DIVIDEND_TREND(id)
       this.is_show_detail = true
     }
   }

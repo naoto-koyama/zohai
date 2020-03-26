@@ -1,3 +1,4 @@
 export default {
-  searchStr: ''
+  brand_latest_dividends: [],
+  dividend_trends: []
 }
