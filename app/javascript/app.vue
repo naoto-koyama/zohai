@@ -52,6 +52,8 @@
 <script>
 import axios from 'axios'
 import _ from 'lodash'
+import { mapActions, mapGetters } from 'vuex'
+import { T } from './store/global-store/types.js'
 export default {
   data: function () {
     return {
@@ -88,6 +90,11 @@ export default {
       is_show_detail: false
     }
   },
+  computed: {
+    ...mapGetters({
+      hogeTest: 'getHoge'
+    })
+  },
   mounted () {
     axios
       .get('/api/dividends.json')
@@ -97,6 +104,11 @@ export default {
       })
   },
   methods : {
+    ...mapActions(T),
+    testHoge () {
+      console.log('testHoge click')
+      this.HOGE("hogehoge")
+    },
     sort (select_column) {
       this.sort_order = this.getSortOrder(select_column === this.sort_column)
       this.modifyOrderClass(select_column)
