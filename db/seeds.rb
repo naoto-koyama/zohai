@@ -46,4 +46,8 @@ ActiveRecord::Base.transaction do
       )
     end
   end
+
+  Brand.all.each do |brand|
+    create(:brand_latest_dividend, brand: brand, dividend: brand.latest_dividend, fiscal_year: brand.latest_dividend.fiscal_year_date)
+  end
 end
