@@ -29,7 +29,7 @@ Brand.all.each do |brand|
   dividend_of_last_year = nil
   continuous_dividend_increase_years_of_last_year = 0
   brand.brand_fiscal_years.order_by_fiscal_year('asc').each_with_index do |brand_fiscal_year, index|
-    if index.zero?
+    if index.zero? || brand_fiscal_year.dividend.indicated_dividend <= dividend_of_last_year.indicated_dividend
       dividend_of_last_year = brand_fiscal_year.dividend
       continuous_dividend_increase_years_of_last_year = 0
       next
