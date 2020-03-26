@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <table class="responsive-table">
+  <div class="row">
+    <table class="col p-divide-list">
       <thead>
         <tr>
           <th :class="orderClass['code']" @click="sort('code') ">コード</th>
@@ -22,6 +22,36 @@
         </tr>
       </tbody>
     </table>
+
+    <table class="col p-divide-trend-list">
+      <thead>
+        <th>会計年度</th>
+        <th>配当金</th>
+        <th>連続増配</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>201903</td>
+          <td>100</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>201803</td>
+          <td>90</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>201703</td>
+          <td>85</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>201603</td>
+          <td>87</td>
+          <td>0</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -32,6 +62,7 @@ export default {
   data: function () {
     return {
       brand_latest_dividends: [],
+      dividend_trends: [],
       sort_column: '',
       sort_order: 'asc',
       orderClass: {
@@ -110,5 +141,14 @@ export default {
       content:'arrow_drop_down';
       font-family: "Material Icons";
     }
+  }
+
+  .p-divide-list {
+    width: 75%;
+    margin: 0 30px 0 0;
+  }
+
+  .p-divide-trend-list {
+    width: 22%;
   }
 </style>
