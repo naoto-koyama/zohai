@@ -6,5 +6,13 @@ export const mutations = {
   },
   [T.GET_DIVIDEND_TREND] (state, dividend_trends) {
     state.dividend_trends = dividend_trends
+    state.is_show_detail = true
+  },
+  [T.SORT_BRAND_LATEST_DIVIIEDEND] (state, { sort_column, sort_order }) {
+    state.sort_column = sort_column
+    state.sort_order = sort_order
+  },
+  [T.CLOSE_DIVIDEND_TREND] (state) {
+    state.is_show_detail = false
   }
 }
