@@ -8,7 +8,7 @@
           <th :class="orderClass['latest_fiscal_year']" @click="sort('latest_fiscal_year')">会計年度</th>
           <th :class="orderClass['latest_dividend']" @click="sort('latest_dividend')">配当金</th>
           <th :class="orderClass['payout_ratio']" @click="sort('payout_ratio')">配当性向</th>
-          <th :class="orderClass['continuous_dividend_increase_years']" @click="sort('continuous_dividend_increase_years')">連続増配年数</th>
+          <th :class="orderClass['continuous_dividend_increase_years']" @click="sort('continuous_dividend_increase_years')">連続増配</th>
         </tr>
       </thead>
       <tbody>
