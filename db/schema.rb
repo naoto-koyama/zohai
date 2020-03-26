@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_25_061700) do
+ActiveRecord::Schema.define(version: 2020_03_25_085532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2020_03_25_061700) do
     t.integer "continuous_dividend_increase_years", default: 0, null: false
     t.decimal "payout_ratio"
     t.index ["brand_fiscal_year_id"], name: "index_dividends_on_brand_fiscal_year_id"
+    t.index ["brand_fiscal_year_id"], name: "index_dividends_on_brand_fiscal_year_id_unique", unique: true
   end
 
   create_table "fiscal_years", force: :cascade do |t|
