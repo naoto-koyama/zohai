@@ -12,13 +12,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="brand in brands.slice(0, 100)" :key="brand.code">
-          <td>{{brand.code}}</td>
-          <td>{{brand.name}}</td>
-          <td>{{brand.latest_fiscal_year}}</td>
-          <td>{{brand.latest_dividend}}</td>
-          <td>{{brand.payout_ratio}}</td>
-          <td>{{brand.continuous_dividend_increase_years}}</td>
+        <tr v-for="brand_latest_dividend in brand_latest_dividends.slice(0, 100)" :key="brand_latest_dividend.code">
+          <td>{{brand_latest_dividend.code}}</td>
+          <td>{{brand_latest_dividend.name}}</td>
+          <td>{{brand_latest_dividend.fiscal_year}}</td>
+          <td>{{brand_latest_dividend.indicated_dividend}}</td>
+          <td>{{brand_latest_dividend.payout_ratio}}</td>
+          <td>{{brand_latest_dividend.continuous_dividend_increase_years}}</td>
         </tr>
       </tbody>
     </table>
@@ -31,7 +31,7 @@ import _ from 'lodash'
 export default {
   data: function () {
     return {
-      brands: [],
+      brand_latest_dividends: [],
       sort_column: '',
       sort_order: 'asc',
       orderClass: {
@@ -67,7 +67,7 @@ export default {
     axios
       .get('/api/dividends.json')
       .then(response => {
-        this.brands = response.data
+        this.brand_latest_dividends = response.data
         this.sort('code')
       })
   },
@@ -76,7 +76,7 @@ export default {
       this.sort_order = this.getSortOrder(select_column === this.sort_column)
       this.modifyOrderClass(select_column)
       this.sort_column = select_column
-      this.brands = _.orderBy(this.brands, this.sort_column, this.sort_order)
+      this.brand_latest_dividends = _.orderBy(this.brand_latest_dividends, this.sort_column, this.sort_order)
     },
     getSortOrder(isChangeOrder) {
       if (!isChangeOrder) {

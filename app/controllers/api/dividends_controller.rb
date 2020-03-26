@@ -1,5 +1,5 @@
 class Api::DividendsController < ApplicationController
   def index
-    @brands = Brand.all
+    @brand_latest_dividends = BrandLatestDividend.includes(:brand).includes(:dividend)
   end
 end
