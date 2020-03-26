@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_25_085532) do
+ActiveRecord::Schema.define(version: 2020_03_26_004241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(version: 2020_03_25_085532) do
     t.datetime "updated_at", null: false
     t.index ["brand_id"], name: "index_brand_fiscal_years_on_brand_id"
     t.index ["fiscal_year_id"], name: "index_brand_fiscal_years_on_fiscal_year_id"
+  end
+
+  create_table "brand_latest_dividends", force: :cascade do |t|
+    t.bigint "brand_id"
+    t.bigint "dividend_id"
+    t.date "fiscal_year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["brand_id"], name: "index_brand_latest_dividends_on_brand_id"
+    t.index ["dividend_id"], name: "index_brand_latest_dividends_on_dividend_id"
   end
 
   create_table "brands", force: :cascade do |t|
@@ -54,5 +64,7 @@ ActiveRecord::Schema.define(version: 2020_03_25_085532) do
 
   add_foreign_key "brand_fiscal_years", "brands"
   add_foreign_key "brand_fiscal_years", "fiscal_years"
+  add_foreign_key "brand_latest_dividends", "brands"
+  add_foreign_key "brand_latest_dividends", "dividends"
   add_foreign_key "dividends", "brand_fiscal_years"
 end
