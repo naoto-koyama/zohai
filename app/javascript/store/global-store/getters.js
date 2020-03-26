@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export const getters = {
   getBrandLatestDividends(state) {
     return _.orderBy(state.brand_latest_dividends, state.sort_column, state.sort_order)

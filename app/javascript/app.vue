@@ -50,8 +50,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import _ from 'lodash'
 import { mapActions, mapGetters } from 'vuex'
 import { T } from './store/global-store/types.js'
 export default {
