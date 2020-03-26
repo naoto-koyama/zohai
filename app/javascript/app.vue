@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table>
+    <table class="responsive-table">
       <thead>
         <tr>
           <th :class="orderClass['code']" @click="sort('code') ">コード</th>
@@ -101,12 +101,14 @@ export default {
 <style lang="scss" scoped>
   .p-asc {
     &::before {
-      content: '▲';
+      content:'arrow_drop_up';
+      font-family: "Material Icons";
     }
   }
   .p-desc {
     &::before {
-      content: '▼';
+      content:'arrow_drop_down';
+      font-family: "Material Icons";
     }
   }
 </style>
