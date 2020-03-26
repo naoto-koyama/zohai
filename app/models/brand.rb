@@ -7,6 +7,6 @@ class Brand < ApplicationRecord
   end
 
   def latest_dividend
-    @latest_dividend ||= brand_fiscal_years.order_by_fiscal_year.first.dividend
+    @latest_dividend ||= brand_fiscal_years&.order_by_fiscal_year&.first&.dividend
   end
 end
