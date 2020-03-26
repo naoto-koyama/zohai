@@ -7,9 +7,11 @@
 
 import Vue from 'vue'
 import App from '../app.vue'
+import Store  from '../store/store'
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
+    store: Store,
     render: h => h(App)
   }).$mount()
   document.body.appendChild(app.$el)
