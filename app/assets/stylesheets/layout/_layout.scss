@@ -1,0 +1,20 @@
+.l-main {
+  padding: 0 25px;
+}
+
+.l-nav {
+  margin: 0 0 20px;
+}
+
+.l-footer {
+  color: white;
+  height: 24px;
+  padding: 0 25px;
+  margin: 20px 0 0;
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    font-family: 'Indie Flower', cursive;
+  }
+}

@@ -58,7 +58,7 @@ export const getters = {
   pageClass: (state) => (page_no) => {
     return {
       "active": state.current_page === page_no,
-      "waves-effect": (state.current_page - 2 !== page_no) && (state.current_page + 5 !== page_no)
+      "waves-effect": [state.current_page - 2, state.current_page, state.current_page + 5].indexOf(page_no) === -1
     }
   },
   isFirstPage: (state) => {
