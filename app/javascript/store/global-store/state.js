@@ -3,5 +3,8 @@ export default {
   dividend_trends: [],
   is_show_detail: false,
   sort_column: 'code',
-  sort_order: 'asc'
+  sort_order: 'asc',
+  current_page: 1,
+  total_page: 1,
+  pagenate_slice_no: 15
 }

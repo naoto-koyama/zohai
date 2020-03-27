@@ -1,8 +1,9 @@
 import { T } from './types'
 
 export const mutations = {
-  [T.LOAD_BRAND_LATEST_DIVIDEND] (state, brand_latest_dividends) {
+  [T.LOAD_BRAND_LATEST_DIVIDEND] (state, { brand_latest_dividends, total_page }) {
     state.brand_latest_dividends = brand_latest_dividends
+    state.total_page = total_page
   },
   [T.GET_DIVIDEND_TREND] (state, dividend_trends) {
     state.dividend_trends = dividend_trends
@@ -14,5 +15,11 @@ export const mutations = {
   },
   [T.CLOSE_DIVIDEND_TREND] (state) {
     state.is_show_detail = false
+  },
+  [T.CLICK_PAGENATE] (state, page_no) {
+    state.current_page = page_no
+  },
+  [T.CLICK_PAGENATE] (state, page_no) {
+    state.current_page = page_no
   }
 }
