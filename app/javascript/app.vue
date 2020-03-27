@@ -5,16 +5,16 @@
         <table>
           <thead>
             <tr>
-              <th :class="orderClass('code')" @click="sort('code') ">コード</th>
-              <th :class="orderClass('name')" @click="sort('name')">銘柄</th>
-              <th :class="orderClass('fiscal_year')" @click="sort('fiscal_year')">会計年度</th>
-              <th :class="orderClass('indicated_dividend')" @click="sort('indicated_dividend')">配当金</th>
-              <th :class="orderClass('payout_ratio')" @click="sort('payout_ratio')">配当性向</th>
-              <th :class="orderClass('continuous_dividend_increase_years')" @click="sort('continuous_dividend_increase_years')">連続増配</th>
+              <th :class="order_class('code')" @click="sort('code') ">コード</th>
+              <th :class="order_class('name')" @click="sort('name')">銘柄</th>
+              <th :class="order_class('fiscal_year')" @click="sort('fiscal_year')">会計年度</th>
+              <th :class="order_class('indicated_dividend')" @click="sort('indicated_dividend')">配当金</th>
+              <th :class="order_class('payout_ratio')" @click="sort('payout_ratio')">配当性向</th>
+              <th :class="order_class('continuous_dividend_increase_years')" @click="sort('continuous_dividend_increase_years')">連続増配</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="hoverable" v-for="brand_latest_dividend in brand_latest_dividends.slice(0, 15)" :key="brand_latest_dividend.id"　@click="clickBrandName(brand_latest_dividend.id)">
+            <tr class="hoverable" v-for="brand_latest_dividend in brand_latest_dividends" :key="brand_latest_dividend.id"　@click="clickBrandName(brand_latest_dividend.id)">
               <td>{{brand_latest_dividend.code}}</td>
               <td class="p-brand-name--truncate" >{{brand_latest_dividend.name}}</td>
               <td>{{brand_latest_dividend.fiscal_year}}</td>
@@ -25,13 +25,31 @@
           </tbody>
         </table>
         <ul class="pagination">
-          <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-          <li class="active"><a href="#!">1</a></li>
-          <li class="waves-effect"><a href="#!">2</a></li>
-          <li class="waves-effect"><a href="#!">3</a></li>
-          <li class="waves-effect"><a href="#!">4</a></li>
-          <li class="waves-effect"><a href="#!">5</a></li>
-          <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+          <li :class="prev_class" @click="clickFirstPage()">
+            <a>
+              <i class="material-icons">first_page</i>
+            </a>
+          </li>
+          <li :class="prev_class" @click="clickPrev()">
+            <a>
+              <i class="material-icons">chevron_left</i>
+            </a>
+          </li>
+          <li :class="page_class(n)" v-for="n in display_page_nos" :key="n">
+            <a v-if="n === current_page - 2">...</a>
+            <a v-else-if="current_page - 2 < n && n < current_page + 5" @click="clickPage(n)">{{n}}</a>
+            <a v-else-if="n === current_page + 5 || n === current_page - 1">...</a>
+          </li>
+          <li :class="next_class" @click="clickNext()">
+            <a>
+              <i class="material-icons">chevron_right</i>
+            </a>
+          </li>
+          <li :class="next_class" @click="clickLastPage()">
+            <a>
+              <i class="material-icons">last_page</i>
+            </a>
+          </li>
         </ul>
       </div>
 
@@ -71,22 +89,43 @@ export default {
       brand_latest_dividends: 'getBrandLatestDividends',
       dividend_trends: 'getDividendTrends',
       is_show_detail: 'getIsShowDetail',
-      orderClass: 'getOrderClass'
-    })
+      order_class: 'getOrderClass',
+      pagenate_slice_no: 'getPagenateSliceNo',
+      next_class: 'nextClass',
+      prev_class: 'prevClass',
+      page_class: 'pageClass',
+      display_page_nos: 'getDisplayPageNos',
+      current_page: 'getCurrentPage'
+    }),
   },
   mounted () {
     this.LOAD_BRAND_LATEST_DIVIDEND()
   },
   methods : {
     ...mapActions(T),
-    sort (select_column) {
-      this.SORT_BRAND_LATEST_DIVIIEDEND(select_column)
+    sort (sort_column) {
+      this.SORT_BRAND_LATEST_DIVIIEDEND(sort_column)
     },
     clickBrandName(id) {
       this.GET_DIVIDEND_TREND(id)
     },
     clickCloseIcon() {
       this.CLOSE_DIVIDEND_TREND()
+    },
+    clickPrev() {
+      this.CLICK_PREV_PAGENATE()
+    },
+    clickNext() {
+      this.CLICK_NEXT_PAGENATE()
+    },
+    clickPage(n) {
+      this.CLICK_PAGENATE(n)
+    },
+    clickFirstPage() {
+      this.CLICK_FIRST_PAGE()
+    },
+    clickLastPage() {
+      this.CLICK_LAST_PAGE()
     }
   }
 }
