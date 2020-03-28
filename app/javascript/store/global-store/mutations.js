@@ -12,6 +12,7 @@ export const mutations = {
   [T.SORT_BRAND_LATEST_DIVIIEDEND] (state, { sort_column, sort_order }) {
     state.sort_column = sort_column
     state.sort_order = sort_order
+    state.current_page = 1
   },
   [T.CLOSE_DIVIDEND_TREND] (state) {
     state.is_show_detail = false

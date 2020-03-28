@@ -31,8 +31,8 @@
                 <td class="p-brand-name--truncate" >{{brand_latest_dividend.name}}</td>
                 <td>{{brand_latest_dividend.fiscal_year}}</td>
                 <td>{{brand_latest_dividend.indicated_dividend}}</td>
-                <td>{{brand_latest_dividend.payout_ratio}}</td>
-                <td>{{brand_latest_dividend.continuous_dividend_increase_years}}</td>
+                <td>{{brand_latest_dividend.payout_ratio}} %</td>
+                <td>{{brand_latest_dividend.continuous_dividend_increase_years}}年</td>
               </tr>
             </tbody>
           </table>
@@ -81,8 +81,8 @@
                 <tr v-for="dividend_trend in dividend_trends" :v-key="dividend_trend.fiscal_year">
                   <td>{{dividend_trend.fiscal_year}}</td>
                   <td>{{dividend_trend.indicated_dividend}}</td>
-                  <td>{{dividend_trend.payout_ratio}}</td>
-                  <td>{{dividend_trend.continuous_dividend_increase_years}}</td>
+                  <td>{{dividend_trend.payout_ratio}} %</td>
+                  <td>{{dividend_trend.continuous_dividend_increase_years}}年</td>
                 </tr>
               </tbody>
             </table>
