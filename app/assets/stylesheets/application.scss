@@ -14,10 +14,9 @@
  *= require_self
  */
 
-/* foundation */
 @import 'foundation/base';
-/* layout */
 @import "layout/layout";
+@import "component/card";
 
 /* Materialize */
 @import "materialize/components/color-variables";

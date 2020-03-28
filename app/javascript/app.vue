@@ -1,19 +1,18 @@
 <template>
   <div>
     <nav class="l-nav grey darken-2">
-      <div class="p-nav-wrapper">
-        <span class="p-nav-title">Kabu</span>
-        <ul>
-          <li class="p-nav-wrapper__search">
-            <input type="text" placeholder="Code or Name" v-model="search_text" @input="changeSearch()">
-            <i class="material-icons">search</i>
-          </li>
-        </ul>
-      </div>
+      <span class="l-nav__title">Kabu</span>
+      <ul>
+        <li class="l-nav__search">
+          <input type="text" placeholder="Code or Name" v-model="search_text" @input="changeSearch()">
+          <i class="material-icons">search</i>
+        </li>
+      </ul>
     </nav>
     <main class="l-main">
       <div class="p-table-list">
-        <div class="p-divide-list" :class="{ 'is_show_detail': is_show_detail }">
+        <div class="c-card p-divide-list" :class="{ 'is_show_detail': is_show_detail }">
+          <p class="c-card__title">銘柄リスト</p>
           <table>
             <thead>
               <tr>
@@ -26,7 +25,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="hoverable" v-for="brand_latest_dividend in brand_latest_dividends" :key="brand_latest_dividend.id"　@click="clickBrandName(brand_latest_dividend.id)">
+              <tr class="hoverable" v-for="brand_latest_dividend in brand_latest_dividends" :key="brand_latest_dividend.id"　@click="clickBrandName(brand_latest_dividend)">
                 <td>{{brand_latest_dividend.code}}</td>
                 <td class="p-brand-name--truncate" >{{brand_latest_dividend.name}}</td>
                 <td>{{brand_latest_dividend.fiscal_year}}</td>
@@ -66,7 +65,8 @@
         </div>
 
         <transition name="fade">
-          <div class="p-divide-trend-list" v-if="is_show_detail">
+          <div class="c-card p-divide-trend-list" v-if="is_show_detail">
+            <p class="c-card__title">{{trend_list_title}}</p>
             <i class="material-icons p-close" @click="clickCloseIcon()">close</i>
             <table>
               <thead>
@@ -103,7 +103,8 @@ import { T } from './store/global-store/types.js'
 export default {
   data ()  {
     return {
-      search_text: ''
+      search_text: '',
+      select_brand_dividend: ''
     }
   },
   computed: {
@@ -121,6 +122,9 @@ export default {
     }),
     current_year() {
       return new Date().getFullYear()
+    },
+    trend_list_title() {
+      return this.select_brand_dividend.code + ' : ' + this.select_brand_dividend.name
     }
   },
   mounted () {
@@ -131,8 +135,9 @@ export default {
     sort (sort_column) {
       this.SORT_BRAND_LATEST_DIVIIEDEND(sort_column)
     },
-    clickBrandName(id) {
-      this.GET_DIVIDEND_TREND(id)
+    clickBrandName(brand_latest_dividend) {
+      this.select_brand_dividend = brand_latest_dividend
+      this.GET_DIVIDEND_TREND(brand_latest_dividend.id)
     },
     clickCloseIcon() {
       this.CLOSE_DIVIDEND_TREND()
@@ -160,35 +165,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .p-nav-wrapper {
-    padding: 0 25px;
-    display: flex;
-    justify-content: space-between;
-
-    .p-nav-title {
-      font-size: 50px;
-      font-family: 'Indie Flower', cursive;
-    }
-
-    .p-nav-wrapper__search {
-      display: flex;
-      align-items: center;
-      input {
-        height: 1.5em;
-        margin: 0;
-        color: #ffffff;
-        font-family: 'Noto Sans JP', 'Roboto', sans-serif;
-        &:focus {
-          box-shadow: 0 3px 5px -3px #9e9e9e;
-          border-bottom: #9e9e9e 1px solid;
-        }
-        &::placeholder {
-          font-weight: bold;
-        }
-      }
+  .c-card {
+    &__title {
+      padding: 10px;
     }
   }
-
 
   .p-table-list {
     display: flex;
@@ -212,6 +193,10 @@ export default {
   table {
     white-space:nowrap;
 
+    thead > tr {
+      border-bottom: 3px solid rgba(0, 0, 0, 0.12);
+      border-top: 3px solid rgba(0, 0, 0, 0.12);
+    }
     tr {
       line-height: 0.5;
     }
