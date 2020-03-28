@@ -5,7 +5,7 @@
         <span class="p-nav-title">Kabu</span>
         <ul>
           <li class="p-nav-wrapper__search">
-            <input type="text">
+            <input type="text" placeholder="Code or Name" v-model="search_text" @input="changeSearch()">
             <i class="material-icons">search</i>
           </li>
         </ul>
@@ -101,6 +101,11 @@
 import { mapActions, mapGetters } from 'vuex'
 import { T } from './store/global-store/types.js'
 export default {
+  data ()  {
+    return {
+      search_text: ''
+    }
+  },
   computed: {
     ...mapGetters({
       brand_latest_dividends: 'getBrandLatestDividends',
@@ -146,6 +151,9 @@ export default {
     },
     clickLastPage() {
       this.CLICK_LAST_PAGE()
+    },
+    changeSearch() {
+      this.CHANGE_SEARCH_CHAR(this.search_text)
     }
   }
 }
@@ -169,6 +177,14 @@ export default {
         height: 1.5em;
         margin: 0;
         color: #ffffff;
+        font-family: 'Noto Sans JP', 'Roboto', sans-serif;
+        &:focus {
+          box-shadow: 0 3px 5px -3px #9e9e9e;
+          border-bottom: #9e9e9e 1px solid;
+        }
+        &::placeholder {
+          font-weight: bold;
+        }
       }
     }
   }
