@@ -1,0 +1,9 @@
+.c-card {
+  background: white;
+  border-top: #f57c00 3px solid;
+
+  &__title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
