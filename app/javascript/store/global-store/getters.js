@@ -1,6 +1,9 @@
 import _ from 'lodash'
 
 export const getters = {
+  getLoading(state) {
+    return state.loading
+  },
   getBrandLatestDividends(state, getters) {
     let start = (state.current_page - 1) * state.pagenate_slice_no
     let end = state.current_page * state.pagenate_slice_no
