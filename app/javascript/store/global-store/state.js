@@ -6,5 +6,6 @@ export default {
   sort_order: 'asc',
   current_page: 1,
   total_page: 1,
-  pagenate_slice_no: 15
+  pagenate_slice_no: 15,
+  search_text: ''
 }

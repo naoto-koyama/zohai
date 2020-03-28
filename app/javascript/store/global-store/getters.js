@@ -1,10 +1,16 @@
 import _ from 'lodash'
 
 export const getters = {
-  getBrandLatestDividends(state) {
+  getBrandLatestDividends(state, getters) {
     let start = (state.current_page - 1) * state.pagenate_slice_no
     let end = state.current_page * state.pagenate_slice_no
-    return _.orderBy(state.brand_latest_dividends, state.sort_column, state.sort_order).slice(start, end)
+    return _.orderBy(getters.getFilteredBrandLatestDividends(state.search_text), state.sort_column, state.sort_order).slice(start, end)
+  },
+  getFilteredBrandLatestDividends: (state) => (search_text) => {
+    if (search_text === '') return state.brand_latest_dividends
+    return state.brand_latest_dividends.filter((brand_latest_dividend) => {
+      return brand_latest_dividend.code.indexOf(search_text) > -1 || brand_latest_dividend.name.indexOf(search_text) > -1
+    })
   },
   getDividendTrends(state) {
     return state.dividend_trends

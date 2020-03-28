@@ -6,7 +6,7 @@ export const actions = {
     axios
       .get('/api/dividends.json')
       .then(response => {
-        let total_page = Math.ceil(response.data.length / state.pagenate_slice_no);
+        let total_page = Math.ceil(response.data.length / state.pagenate_slice_no)
         commit(T.LOAD_BRAND_LATEST_DIVIDEND, { brand_latest_dividends: response.data, total_page: total_page })
       })
   },
@@ -39,8 +39,11 @@ export const actions = {
     commit(T.CLICK_PAGENATE, 1)
   },
   [T.CLICK_LAST_PAGE] ({ commit, state }) {
-    console.log(state.total_page)
     commit(T.CLICK_PAGENATE, state.total_page)
+  },
+  [T.CHANGE_SEARCH_CHAR] ({ commit, state, getters }, search_text) {
+    let total_page = Math.ceil(getters.getFilteredBrandLatestDividends(search_text).length / state.pagenate_slice_no)
+    commit(T.CHANGE_SEARCH_CHAR, { search_text: search_text, total_page: total_page})
   }
 }
 
