@@ -74,6 +74,6 @@ export const getters = {
     return state.current_page === 1
   },
   isLastPage: (state) => {
-    return state.current_page === state.total_page
+    return state.current_page === state.total_page || state.total_page === 0
   }
 }
