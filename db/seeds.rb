@@ -1,8 +1,3 @@
-require 'factory_bot'
-include FactoryBot::Syntax::Methods
-FactoryBot.definition_file_paths = [ Rails.root.join('spec', 'factories') ]
-FactoryBot.reload
-
 def continuous_dividend_increase_years(_continuous_dividend_increase_years, indicated_dividend_of_last_year, indicated_dividend_of_current_year, is_first)
   return 0 if is_first
 
@@ -12,9 +7,7 @@ end
 ActiveRecord::Base.transaction do
   (1..12).each do |month|
     (1..10).each do |n|
-      create(:fiscal_year,
-        fiscal_year: Date.new(Time.current.ago(n.years).year, month, 1)
-      )
+      FiscalYear.create(fiscal_year: Date.new(Time.current.ago(n.years).year, month, 1))
     end
   end
 
@@ -31,12 +24,10 @@ ActiveRecord::Base.transaction do
       surplus_dividend = Faker::Number.between(from: 1_000_000, to: 1_000_000_000)
       indicated_dividend = Faker::Number.decimal(l_digits: 2, r_digits: 2)
 
-      brand_fiscal_year = create(:brand_fiscal_year,
-                                   brand: brand,
-                                   fiscal_year: fiscal_year)
+      brand_fiscal_year = BrandFiscalYear(brand: brand, fiscal_year: fiscal_year)
 
       _continuous_dividend_increase_years = continuous_dividend_increase_years(_continuous_dividend_increase_years, dividend&.indicated_dividend, indicated_dividend, n == 10)
-      dividend = create(:dividend,
+      dividend = Dividend.create(
         brand_fiscal_year: brand_fiscal_year,
         indicated_dividend: indicated_dividend,
         surplus_dividend: surplus_dividend,
@@ -48,6 +39,6 @@ ActiveRecord::Base.transaction do
   end
 
   Brand.all.each do |brand|
-    create(:brand_latest_dividend, brand: brand, dividend: brand.latest_dividend, fiscal_year: brand.latest_dividend.fiscal_year_date)
+    BrandLatestDividend.create(brand: brand, dividend: brand.latest_dividend, fiscal_year: brand.latest_dividend.fiscal_year_date)
   end
 end
