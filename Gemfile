@@ -47,7 +47,7 @@ gem 'jquery-rails'
 gem 'materialize-sass'
 gem 'material_icons'
 
-# Fake Data
+# Fake
 gem 'faker'
 
 group :development, :test do
