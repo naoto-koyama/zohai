@@ -7,35 +7,6 @@
   padding: 0 25px;
   display: flex;
   justify-content: space-between;
-
-  &__title {
-    font-size: 50px;
-    font-family: 'Indie Flower', cursive;
-    display: flex;
-
-    &:before {
-      content: '';
-      background: #f57c00;
-      width: 15px;
-      height: 100%;
-      border-radius: 5px;
-      margin: 0 10px 0 0;
-    }
-  }
-
-  &__search {
-    display: flex;
-    align-items: center;
-    input {
-      height: 1.5em;
-      margin: 0;
-      color: #ffffff;
-      font-family: 'Noto Sans JP', 'Roboto', sans-serif;
-      &::placeholder {
-        opacity: 0.5;
-      }
-    }
-  }
 }
 
 .l-footer {
