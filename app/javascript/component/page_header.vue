@@ -83,19 +83,20 @@
     }
   }
 
-
-  * {
+  .p-search-month {
     --placeholder-color: #999999;
-  }
 
-  /deep/
-  .select-wrapper {
-    height: 100%;
-    input.select-dropdown {
-      color: var(--placeholder-color);
-    }
-    svg {
-      display: none;
+    /deep/
+    .select-wrapper {
+      height: 100%;
+
+      input.select-dropdown {
+        color: var(--placeholder-color);
+      }
+
+      svg {
+        display: none;
+      }
     }
   }
 
