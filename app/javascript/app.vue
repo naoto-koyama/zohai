@@ -6,7 +6,7 @@
         <page-header />
         <main class="l-main">
           <div class="p-table-list">
-            <div class="c-card p-divide-list" :class="{ 'is_show_detail': is_show_detail }">
+            <div class="c-card p-divide-list" :class="{ 'is-show-detail': is_show_detail }">
               <p class="c-card__title">銘柄リスト</p>
               <table>
                 <thead>
@@ -201,16 +201,27 @@ export default {
   .p-divide-list {
     width: 100%;
 
-    &.is_show_detail {
+    &.is-show-detail {
       width: 65%;
     }
   }
 
+  .p-divide-trend-list {
+    position: relative;
+    width: 30%;
+  }
+
   @media screen and (max-width: 960px) {
     .p-divide-list {
-      &.is_show_detail {
+      &.is-show-detail {
         width: 100%;
+        margin: 0 0 20px;
       }
+    }
+
+    .p-divide-trend-list {
+      position: relative;
+      width: 100%;
     }
   }
 
@@ -219,11 +230,6 @@ export default {
     .active {
       background: #bdbdbd;
     }
-  }
-
-  .p-divide-trend-list {
-    position: relative;
-    width: 30%;
   }
 
   .p-close {
@@ -235,7 +241,7 @@ export default {
   .p-brand-name--truncate {
     overflow:hidden;
     text-overflow: ellipsis;
-    max-width: 250px;
+    max-width: 100px;
   }
 
   .fade-enter-active {
