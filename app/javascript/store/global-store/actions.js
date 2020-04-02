@@ -41,8 +41,12 @@ export const actions = {
   [T.CLICK_LAST_PAGE] ({ commit, state }) {
     commit(T.CLICK_PAGENATE, state.total_page)
   },
+  [T.CHANGE_MONTH] ({ commit, state, getters }, search_months) {
+    let total_page = Math.ceil(getters.getFilteredBrandLatestDividends(state.search_text, search_months).length / state.pagenate_slice_no)
+    commit(T.CHANGE_MONTH, { search_months: search_months, total_page: total_page })
+  },
   [T.CHANGE_SEARCH_CHAR] ({ commit, state, getters }, search_text) {
-    let total_page = Math.ceil(getters.getFilteredBrandLatestDividends(search_text).length / state.pagenate_slice_no)
+    let total_page = Math.ceil(getters.getFilteredBrandLatestDividends(search_text, state.search_months).length / state.pagenate_slice_no)
     commit(T.CHANGE_SEARCH_CHAR, { search_text: search_text, total_page: total_page})
   }
 }

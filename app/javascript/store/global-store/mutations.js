@@ -24,6 +24,12 @@ export const mutations = {
   [T.CLICK_PAGENATE] (state, page_no) {
     state.current_page = page_no
   },
+  [T.CHANGE_MONTH] (state, { search_months, total_page }) {
+    state.total_page = total_page
+    state.current_page = 1
+    state.is_show_detail = false
+    state.search_months = search_months
+  },
   [T.CHANGE_SEARCH_CHAR] (state, { search_text, total_page }) {
     state.search_text = search_text
     state.total_page = total_page

@@ -7,6 +7,7 @@ export default {
   current_page: 1,
   total_page: 1,
   pagenate_slice_no: 15,
+  search_months: [],
   search_text: '',
   loading: true
 }
