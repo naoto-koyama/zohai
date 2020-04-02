@@ -238,7 +238,7 @@ export default {
     max-width: 250px;
   }
 
-  .fade-enter-active, .fade-leave-active {
+  .fade-enter-active {
     transition: opacity 2s;
   }
 
