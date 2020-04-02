@@ -15,7 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     render: h => h(App)
   }).$mount()
   document.body.appendChild(app.$el)
-  $('select').formSelect();
+
+  // 参考: https://materializecss.com/select.html
+  M.FormSelect.init(document.querySelectorAll('select'))
 
   console.log(app)
 })

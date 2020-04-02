@@ -3,18 +3,18 @@
     <span class="p-title">Kabu</span>
     <ul>
       <li class="p-search-month">
-        <div class="input-field">
-          <select multiple v-model="selected_month">
+        <div class="input-field" :style="{'--placeholder-color': this.font_color}">
+          <select multiple v-model="selected_month" @change="change_month()">
             <option value="" disabled>配当月</option>
-            <option value="1">1月</option>
-            <option value="2">2月</option>
-            <option value="3">3月</option>
-            <option value="4">4月</option>
-            <option value="5">5月</option>
-            <option value="6">6月</option>
-            <option value="7">7月</option>
-            <option value="8">8月</option>
-            <option value="9">9月</option>
+            <option value="01">1月</option>
+            <option value="02">2月</option>
+            <option value="03">3月</option>
+            <option value="04">4月</option>
+            <option value="05">5月</option>
+            <option value="06">6月</option>
+            <option value="07">7月</option>
+            <option value="08">8月</option>
+            <option value="09">9月</option>
             <option value="10">10月</option>
             <option value="11">11月</option>
             <option value="12">12月</option>
@@ -36,6 +36,7 @@
   export default {
     data ()  {
       return {
+        font_color: '#999999',
         selected_month: [],
         search_text: ''
       }
@@ -44,6 +45,10 @@
       ...mapActions(T),
       changeSearch() {
         this.CHANGE_SEARCH_CHAR(this.search_text)
+      },
+      change_month() {
+        this.font_color = this.selected_month.length === 0 ? '#999999': 'white'
+        this.CHANGE_MONTH(this.selected_month)
       }
     }
   }
@@ -65,9 +70,32 @@
     }
   }
 
+  .l-nav {
+    ul {
+      & > li {
+        height: 100%;
+        margin: 0 10px 0 0;
+
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+
+  * {
+    --placeholder-color: #999999;
+  }
+
+  /deep/
   .select-wrapper {
-    .select-dropdown {
-      color: white;
+    height: 100%;
+    input.select-dropdown {
+      color: var(--placeholder-color);
+    }
+    svg {
+      display: none;
     }
   }
 
@@ -76,12 +104,17 @@
     align-items: center;
     input {
       height: 1.5em;
-      margin: 0;
+      padding: 0 0 10px;
+      margin: 0 0 8px;
       color: #ffffff;
       font-family: 'Noto Sans JP', 'Roboto', sans-serif;
       &::placeholder {
-        opacity: 0.5;
+        color: #999999;
       }
+
+    }
+    .material-icons {
+      color: #999999;
     }
   }
 </style>

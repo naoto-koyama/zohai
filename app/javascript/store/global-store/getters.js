@@ -7,12 +7,22 @@ export const getters = {
   getBrandLatestDividends(state, getters) {
     let start = (state.current_page - 1) * state.pagenate_slice_no
     let end = state.current_page * state.pagenate_slice_no
-    return _.orderBy(getters.getFilteredBrandLatestDividends(state.search_text), state.sort_column, state.sort_order).slice(start, end)
+    return _.orderBy(getters.getFilteredBrandLatestDividends(state.search_text, state.search_months), state.sort_column, state.sort_order).slice(start, end)
   },
-  getFilteredBrandLatestDividends: (state) => (search_text) => {
-    if (search_text === '') return state.brand_latest_dividends
-    return state.brand_latest_dividends.filter((brand_latest_dividend) => {
+  getFilteredBrandLatestDividends: (state, getters) => (search_text, search_months) => {
+    let tmp_brand_latest_dividends =  getters._filterBrandLatestDividendsByText(state.brand_latest_dividends, search_text)
+    return getters._filterBrandLatestDividendsByMonth(tmp_brand_latest_dividends, search_months)
+  },
+  _filterBrandLatestDividendsByText: (state) => (brand_latest_dividends, search_text) => {
+    if (search_text === '') return brand_latest_dividends
+    return brand_latest_dividends.filter((brand_latest_dividend) => {
       return brand_latest_dividend.code.indexOf(search_text) > -1 || brand_latest_dividend.name.indexOf(search_text) > -1
+    })
+  },
+  _filterBrandLatestDividendsByMonth: (state) => (brand_latest_dividends, search_months) => {
+    if (search_months.length === 0) return brand_latest_dividends
+    return brand_latest_dividends.filter((brand_latest_dividend) => {
+      return search_months.indexOf(brand_latest_dividend.fiscal_year.substr(4,2)) !== -1
     })
   },
   getDividendTrends(state) {
