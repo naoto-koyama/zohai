@@ -8,7 +8,7 @@
           <div class="p-table-list">
             <div class="c-card p-divide-list" :class="{ 'is-show-detail': is_show_detail }">
               <p class="c-card__title">銘柄リスト</p>
-              <table>
+              <table class="highlight">
                 <thead>
                   <tr>
                     <th :class="order_class('code')" @click="sort('code') ">コード</th>
@@ -20,7 +20,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="hoverable" v-for="brand_latest_dividend in brand_latest_dividends" :key="brand_latest_dividend.id"　@click="clickBrandName(brand_latest_dividend)">
+                  <tr v-for="brand_latest_dividend in brand_latest_dividends" :key="brand_latest_dividend.id"　@click="clickBrandName(brand_latest_dividend)">
                     <td>{{brand_latest_dividend.code}}</td>
                     <td class="p-brand-name--truncate" >{{brand_latest_dividend.name}}</td>
                     <td>{{brand_latest_dividend.fiscal_year}}</td>
