@@ -24,8 +24,8 @@ chdir APP_ROOT do
   system! 'bin/rails db:create'
   system! 'bin/rails db:migrate'
 
-  puts "\n== Import Real Data =="
-  system! 'bin/import_real_data'
+  puts "\n== Restore data =="
+  system! 'PGPASSWORD=postgrespass psql -U postgres -d kabu_development -p 54321 -h localhost < db/seeds/dump.sql'
 
   puts "\n== Removing old logs and tempfiles =="
   system! 'bin/rails log:clear tmp:clear'
