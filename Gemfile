@@ -78,3 +78,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-csv gem
 gem 'tzinfo-csv', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'sidekiq'
+gem 'sidekiq-scheduler'
+gem 'sidekiq-failures'
