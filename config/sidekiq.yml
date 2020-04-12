@@ -3,7 +3,7 @@
   - default
   - stock_observer
   - stock_register
-#schedule:
-#  stock_observer_job:
-#    every: 24h
-#    class: StockObserverJob
+schedule:
+  stock_observer_job:
+    every: 24h
+    class: StockObserverJob
