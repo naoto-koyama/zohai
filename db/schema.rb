@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_26_004241) do
+ActiveRecord::Schema.define(version: 2020_04_09_123123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,9 +62,23 @@ ActiveRecord::Schema.define(version: 2020_03_26_004241) do
     t.index ["fiscal_year"], name: "index_fiscal_years_on_fiscal_year", unique: true
   end
 
+  create_table "latest_stocks", force: :cascade do |t|
+    t.bigint "brand_id"
+    t.date "trading_date", null: false
+    t.decimal "open_price", precision: 10, scale: 4
+    t.decimal "close_price", precision: 10, scale: 4
+    t.decimal "high_price", precision: 10, scale: 4
+    t.decimal "low_price", precision: 10, scale: 4
+    t.bigint "trading_volume"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["brand_id"], name: "index_latest_stocks_on_brand_id"
+  end
+
   add_foreign_key "brand_fiscal_years", "brands"
   add_foreign_key "brand_fiscal_years", "fiscal_years"
   add_foreign_key "brand_latest_dividends", "brands"
   add_foreign_key "brand_latest_dividends", "dividends"
   add_foreign_key "dividends", "brand_fiscal_years"
+  add_foreign_key "latest_stocks", "brands"
 end
