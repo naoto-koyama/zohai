@@ -204,13 +204,13 @@ export default {
     width: 100%;
 
     &.is-show-detail {
-      width: 65%;
+      width: calc(70% - 20px);
     }
   }
 
   .p-divide-trend-list {
     position: relative;
-    width: 30%;
+    width: calc(30% - 20px);
   }
 
   @media screen and (max-width: 960px) {
