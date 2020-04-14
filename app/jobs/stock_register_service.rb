@@ -2,14 +2,15 @@ require 'open-uri'
 require 'zip'
 require 'csv'
 require 'net/http'
+require "fileutils"
 
 class StockRegisterService
   USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'.freeze
   class << self
     def call
-      # p download_date
       zip_download
       csv_to_db
+      delete_download_file
     end
 
     private
@@ -48,6 +49,11 @@ class StockRegisterService
         ActiveRecord::Base.connection.execute('TRUNCATE TABLE latest_stocks;')
         LatestStock.import!(stocks)
       end
+    end
+
+    def delete_download_file
+      FileUtils.rm("#{download_dir}/#{file_name}.zip")
+      FileUtils.rm("#{download_dir}/#{file_name}.csv")
     end
 
     def download_date
