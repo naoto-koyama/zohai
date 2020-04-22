@@ -5,56 +5,79 @@
       <div v-show="!loading">
         <page-header />
         <main class="l-main">
+          <div class="p-search-list">
+            <div class="p-search-list__item input-field" :style="{'--placeholder-color': this.font_color}">
+              <select multiple v-model="selected_month" @change="change_month()">
+                <option value="" disabled style="align-text: center;">配当月</option>
+                <option value="01">1月</option>
+                <option value="02">2月</option>
+                <option value="03">3月</option>
+                <option value="04">4月</option>
+                <option value="05">5月</option>
+                <option value="06">6月</option>
+                <option value="07">7月</option>
+                <option value="08">8月</option>
+                <option value="09">9月</option>
+                <option value="10">10月</option>
+                <option value="11">11月</option>
+                <option value="12">12月</option>
+              </select>
+            </div>
+            <div class="p-search-list__item p-search-text ">
+              <input type="text" placeholder="コード / 銘柄" v-model="search_text" @input="changeSearch()">
+              <i class="material-icons">search</i>
+            </div>
+          </div>
           <div class="p-table-list">
-            <div class="c-card p-divide-list" :class="{ 'is-show-detail': is_show_detail }">
-              <p class="c-card__title">銘柄リスト</p>
-              <table class="highlight">
-                <thead>
-                  <tr>
-                    <th :class="order_class('code')" @click="sort('code') ">コード</th>
-                    <th :class="order_class('name')" @click="sort('name')">銘柄</th>
-                    <th :class="order_class('fiscal_year')" @click="sort('fiscal_year')">会計年度</th>
-                    <th :class="order_class('indicated_dividend')" @click="sort('indicated_dividend')">配当金</th>
-                    <th :class="order_class('payout_ratio')" @click="sort('payout_ratio')">配当性向</th>
-                    <th :class="order_class('continuous_dividend_increase_years')" @click="sort('continuous_dividend_increase_years')">連続増配</th>
-                    <th :class="order_class('close_stock_price')" @click="sort('close_stock_price')">前日終値</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="brand_latest_dividend in brand_latest_dividends" :key="brand_latest_dividend.id"　@click="clickBrandName(brand_latest_dividend)">
-                    <td>{{brand_latest_dividend.code}}</td>
-                    <td class="p-brand-name--truncate" >{{brand_latest_dividend.name}}</td>
-                    <td>{{brand_latest_dividend.fiscal_year}}</td>
-                    <td>{{brand_latest_dividend.indicated_dividend}}</td>
-                    <td>{{brand_latest_dividend.payout_ratio}} %</td>
-                    <td>{{brand_latest_dividend.continuous_dividend_increase_years}}年</td>
-                    <td>{{brand_latest_dividend.close_stock_price}}</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="p-divide-list" :class="{ 'is-show-detail': is_show_detail }">
+              <div class="c-card">
+                <p class="c-card__title">銘柄リスト</p>
+                <table class="highlight">
+                  <thead>
+                    <tr>
+                      <th class="name-column" :class="order_class('name')" @click="sort('name')">銘柄</th>
+                      <th :class="order_class('code')" @click="sort('code') ">コード</th>
+                      <th :class="order_class('fiscal_year')" @click="sort('fiscal_year')">会計年度</th>
+                      <th :class="order_class('indicated_dividend')" @click="sort('indicated_dividend')">配当金</th>
+                      <th :class="order_class('payout_ratio')" @click="sort('payout_ratio')">配当性向</th>
+                      <th :class="order_class('continuous_dividend_increase_years')" @click="sort('continuous_dividend_increase_years')">連続増配</th>
+                      <th :class="order_class('close_stock_price')" @click="sort('close_stock_price')">前日終値</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="brand_latest_dividend in brand_latest_dividends" :key="brand_latest_dividend.id"　@click="clickBrandName(brand_latest_dividend)">
+                      <th>{{brand_latest_dividend.name}}</th>
+                      <td data-label="コード">{{brand_latest_dividend.code}}</td>
+                      <td data-label="会計年度">{{brand_latest_dividend.fiscal_year}}</td>
+                      <td data-label="配当金">{{brand_latest_dividend.indicated_dividend}}</td>
+                      <td data-label="配当性向">{{brand_latest_dividend.payout_ratio}} %</td>
+                      <td data-label="連続増配">{{brand_latest_dividend.continuous_dividend_increase_years}}年</td>
+                      <td data-label="前日終値">{{brand_latest_dividend.close_stock_price}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               <ul class="pagination">
-                <li :class="prev_class" @click="clickFirstPage()">
-                  <a>
+                <li class="pagination__item" :class="prev_class" @click="clickFirstPage()">
+                  <a class="pagination__link">
                     <i class="material-icons">first_page</i>
                   </a>
                 </li>
-                <li :class="prev_class" @click="clickPrev()">
-                  <a>
+                <li class="pagination__item" :class="prev_class" @click="clickPrev()">
+                  <a class="pagination__link">
                     <i class="material-icons">navigate_before</i>
                   </a>
                 </li>
-                <li :class="page_class(n)" v-for="n in display_page_nos" :key="n">
-                  <a v-if="n === current_page - 2">...</a>
-                  <a v-else-if="current_page - 2 < n && n < current_page + 5" @click="clickPage(n)">{{n}}</a>
-                  <a v-else-if="n === current_page + 5 || n === current_page - 1">...</a>
+                <li>
+                  Page {{current_page }}
                 </li>
-                <li :class="next_class" @click="clickNext()">
-                  <a>
+                <li class="pagination__item" :class="next_class" @click="clickNext()">
+                  <a class="pagination__link">
                     <i class="material-icons">navigate_next</i>
                   </a>
                 </li>
-                <li :class="next_class" @click="clickLastPage()">
-                  <a>
+                <li class="pagination__item" :class="next_class" @click="clickLastPage()">
+                  <a class="pagination__link">
                     <i class="material-icons">last_page</i>
                   </a>
                 </li>
@@ -96,9 +119,10 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import { T } from './store/global-store/types.js'
-import Spinner from "./component/spinner";
-import PageHeader from "./component/page_header";
-import PageFooter from "./component/page_footer";
+import Spinner from "./component/spinner"
+import PageHeader from "./component/page_header"
+import PageFooter from "./component/page_footer"
+
 export default {
   components: {
     Spinner,
@@ -107,7 +131,10 @@ export default {
   },
   data ()  {
     return {
-      select_brand_dividend: ''
+      select_brand_dividend: '',
+      font_color: '#999999',
+      selected_month: [],
+      search_text: ''
     }
   },
   computed: {
@@ -133,6 +160,13 @@ export default {
   },
   methods : {
     ...mapActions(T),
+    changeSearch() {
+      this.CHANGE_SEARCH_CHAR(this.search_text)
+    },
+    change_month() {
+      this.font_color = this.selected_month.length === 0 ? '#999999': '#616161'
+      this.CHANGE_MONTH(this.selected_month)
+    },
     sort (sort_column) {
       this.SORT_BRAND_LATEST_DIVIIEDEND(sort_column)
     },
@@ -163,6 +197,87 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import '../assets/stylesheets/foundation/_variables.scss';
+
+  .p-search-list {
+    display: flex;
+    align-items: stretch;
+    margin: 0 auto 10px;
+    max-width: 50%;
+    min-width: 40%;
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
+    }
+
+    &__item {
+      margin: 0 10px 0 0;
+      width: calc((100% - 10px) / 2);
+      border-radius: 5px;
+      background: #f5f5f5;
+      @media screen and (max-width: 600px) {
+        width: 100%;
+        margin: 0 0 10px 0;
+      }
+
+      &:last-child {
+        margin: 0;
+      }
+    }
+
+    .input-field {
+      --placeholder-color: $input-focus-color;
+
+      /deep/
+      .select-wrapper {
+        height: 100%;
+
+        input.select-dropdown {
+          padding: 0 10px;
+          margin: 0;
+          text-overflow: ellipsis;
+          color: var(--placeholder-color);
+          border: none;
+
+          @media screen and (max-width: 600px) {
+            font-size: 14px;
+          }
+        }
+
+        svg {
+          display: none;
+        }
+      }
+    }
+
+    .p-search-text {
+      display: flex;
+      align-items: center;
+
+      input {
+        margin: 0;
+        padding: 0 10px;
+        color: #616161;
+        font-family: 'Noto Sans JP', 'Roboto', sans-serif;
+        border: none;
+
+        @media screen and (max-width: 600px) {
+          font-size: 14px;
+        }
+
+        &::placeholder {
+          color: #999999;
+        }
+        &:focus {
+          border: none;
+        }
+
+      }
+      .material-icons {
+        color: #999999;
+      }
+    }
+  }
+
   .c-card {
     &__title {
       padding: 10px;
@@ -189,14 +304,79 @@ export default {
   }
 
   table {
+    table-layout: fixed;
     white-space:nowrap;
+    overflow-x: auto;
 
     thead > tr {
       border-bottom: 3px solid rgba(0, 0, 0, 0.12);
       border-top: 3px solid rgba(0, 0, 0, 0.12);
+      margin: 15px 0;
     }
+
+    th, td {
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+
+    .name-column {
+      width:  40%;
+    }
+
     tr {
       line-height: 0.5;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .c-card__title {
+      display: none;
+    }
+    table {
+      border: 0;
+      width:100%
+    }
+    table th{
+      background-color: #eee;
+      display: block;
+      border-right: none;
+    }
+    table thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+      background-color: black;
+    }
+
+    table tr {
+      display: block;
+      margin-bottom: .625em;
+    }
+
+    table td {
+      border-bottom: 1px solid #bbb;
+      display: block;
+      font-size: .8em;
+      text-align: right;
+      position: relative;
+      padding: .625em .625em .625em 4em;
+      border-right: none;
+    }
+
+    table td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      position: absolute;
+      left: 10px;
+    }
+
+    table td:last-child {
+      border-bottom: 0;
     }
   }
 
@@ -229,6 +409,17 @@ export default {
 
   .pagination {
     text-align: center;
+
+    &__item {
+      line-height: 100%;
+      height: 100%;
+    }
+
+    &__link {
+      line-height: 100%;
+      padding: 0 5px;
+    }
+
     .active {
       background: #bdbdbd;
     }
@@ -238,12 +429,6 @@ export default {
     position: absolute;
     top: 0;
     right: 0;
-  }
-
-  .p-brand-name--truncate {
-    overflow:hidden;
-    text-overflow: ellipsis;
-    max-width: 100px;
   }
 
   .fade-enter-active {
