@@ -7,7 +7,7 @@
         <main class="l-main">
           <div class="p-search-list">
             <div class="p-search-list__item input-field" :style="{'--placeholder-color': this.font_color}">
-              <select multiple v-model="selected_month" @change="change_month()">
+              <select multiple v-model="selected_month" @change="changeMonth()">
                 <option value="" disabled style="align-text: center;">配当月</option>
                 <option value="01">1月</option>
                 <option value="02">2月</option>
@@ -48,7 +48,7 @@
                     <tr v-for="brand_latest_dividend in brand_latest_dividends" :key="brand_latest_dividend.id"　@click="clickBrandName(brand_latest_dividend)">
                       <th>{{brand_latest_dividend.name}}</th>
                       <td data-label="コード">{{brand_latest_dividend.code}}</td>
-                      <td data-label="会計年度">{{brand_latest_dividend.fiscal_year}}</td>
+                      <td data-label="会計年度">{{formatDateYYYYMM(brand_latest_dividend.fiscal_year)}}</td>
                       <td data-label="配当金">{{brand_latest_dividend.indicated_dividend}}</td>
                       <td data-label="配当性向">{{brand_latest_dividend.payout_ratio}} %</td>
                       <td data-label="連続増配">{{brand_latest_dividend.continuous_dividend_increase_years}}年</td>
@@ -99,7 +99,7 @@
                   </thead>
                   <tbody>
                     <tr v-for="dividend_trend in dividend_trends" :v-key="dividend_trend.fiscal_year">
-                      <td>{{dividend_trend.fiscal_year}}</td>
+                      <td>{{formatDateYYYYMM(dividend_trend.fiscal_year)}}</td>
                       <td>{{dividend_trend.indicated_dividend}}</td>
                       <td>{{dividend_trend.payout_ratio}} %</td>
                       <td>{{dividend_trend.continuous_dividend_increase_years}}年</td>
@@ -146,8 +146,6 @@ export default {
       pagenate_slice_no: 'getPagenateSliceNo',
       next_class: 'nextClass',
       prev_class: 'prevClass',
-      page_class: 'pageClass',
-      display_page_nos: 'getDisplayPageNos',
       current_page: 'getCurrentPage',
       loading: 'getLoading'
     }),
@@ -163,7 +161,7 @@ export default {
     changeSearch() {
       this.CHANGE_SEARCH_CHAR(this.search_text)
     },
-    change_month() {
+    changeMonth() {
       this.font_color = this.selected_month.length === 0 ? '#999999': '#616161'
       this.CHANGE_MONTH(this.selected_month)
     },
@@ -183,14 +181,16 @@ export default {
     clickNext() {
       this.CLICK_NEXT_PAGENATE()
     },
-    clickPage(n) {
-      this.CLICK_PAGENATE(n)
-    },
     clickFirstPage() {
       this.CLICK_FIRST_PAGE()
     },
     clickLastPage() {
       this.CLICK_LAST_PAGE()
+    },
+    formatDateYYYYMM(dateChar) {
+      const year = dateChar.substr(0, 4)
+      const month = dateChar.substr(5, 2)
+      return year + month
     }
   }
 }
