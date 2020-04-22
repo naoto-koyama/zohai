@@ -1,6 +1,8 @@
+@import 'foundation/variables';
+
 .c-card {
-  background: white;
-  border-top: #f57c00 3px solid;
+  border-top: $sub-color 3px solid;
+  box-shadow: 2px 2px 4px gray;
 
   &__title {
     font-size: 20px;

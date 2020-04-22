@@ -1,121 +1,116 @@
 <template>
-  <nav class="l-nav grey darken-2">
-    <span class="p-title">Kabu</span>
-    <ul>
-      <li class="p-search-month">
-        <div class="input-field" :style="{'--placeholder-color': this.font_color}">
-          <select multiple v-model="selected_month" @change="change_month()">
-            <option value="" disabled>配当月</option>
-            <option value="01">1月</option>
-            <option value="02">2月</option>
-            <option value="03">3月</option>
-            <option value="04">4月</option>
-            <option value="05">5月</option>
-            <option value="06">6月</option>
-            <option value="07">7月</option>
-            <option value="08">8月</option>
-            <option value="09">9月</option>
-            <option value="10">10月</option>
-            <option value="11">11月</option>
-            <option value="12">12月</option>
-          </select>
-        </div>
-      </li>
-      <li class="p-search-text">
-        <input type="text" placeholder="コード / 銘柄" v-model="search_text" @input="changeSearch()">
-        <i class="material-icons">search</i>
-      </li>
-    </ul>
+  <nav class="l-nav">
+    <span class="l-nav__title">Kabu</span>
   </nav>
 </template>
 
 <script>
-  import {mapActions} from "vuex";
-  import {T} from "../store/global-store/types";
-
-  export default {
-    data ()  {
-      return {
-        font_color: '#999999',
-        selected_month: [],
-        search_text: ''
-      }
-    },
-    methods : {
-      ...mapActions(T),
-      changeSearch() {
-        this.CHANGE_SEARCH_CHAR(this.search_text)
-      },
-      change_month() {
-        this.font_color = this.selected_month.length === 0 ? '#999999': 'white'
-        this.CHANGE_MONTH(this.selected_month)
-      }
-    }
-  }
+export default {
+}
 </script>
 
 <style lang="scss" scoped>
-  .p-title {
-    font-size: 50px;
-    font-family: 'Indie Flower', cursive;
-    display: flex;
+  @for $i from 1 through 6 {
+    @keyframes preload-show-#{$i}{
+      from{
+        transform: rotateZ(60* $i + deg) rotateY(-90deg) rotateX(0deg);
+        border-left-color: #9c2f2f;
+      }
+    }
+    @keyframes preload-hide-#{$i}{
+      to{
+        transform: rotateZ(60* $i + deg) rotateY(-90deg) rotateX(0deg);
+        border-left-color: #9c2f2f;
+      }
+    }
 
-    &:before {
-     content: '';
-     background: #f57c00;
-     width: 15px;
-     height: 100%;
-     border-radius: 5px;
-     margin: 0 10px 0 0;
+    @keyframes preload-cycle-#{$i}{
+
+      $startIndex: $i*5;
+      $reverseIndex: (80 - $i*5);
+
+      #{$startIndex * 1%}{
+        transform: rotateZ(60* $i + deg) rotateY(90deg) rotateX(0deg);
+        border-left-color: #9c2f2f;
+      }
+      #{$startIndex + 5%},
+      #{$reverseIndex * 1%}{
+        transform: rotateZ(60* $i + deg) rotateY(0) rotateX(0deg);
+        border-left-color: #f7484e;
+      }
+
+      #{$reverseIndex + 5%},
+      100%{
+        transform: rotateZ(60* $i + deg) rotateY(90deg) rotateX(0deg);
+        border-left-color: #9c2f2f;
+      }
     }
   }
 
-  .l-nav {
-    ul {
-      & > li {
-        height: 100%;
-        margin: 0 10px 0 0;
+  @keyframes preload-flip{
+    0%{
+      transform: rotateY(0deg) rotateZ(-60deg);
+    }
+    100%{
+      transform: rotateY(360deg) rotateZ(-60deg);
+    }
+  }
 
-        &:last-child {
-          margin: 0;
+  #loading {
+    width: 100vw;
+    height: 100vh;
+    transition: all 1s;
+    background-color: #0bd;
+
+    /* 以下のコードを追加 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+  }
+
+  .preloader{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 20px;
+    display: block;
+    width: 3.75em;
+    height: 4.25em;
+    margin-left: -1.875em;
+    margin-top: -2.125em;
+    transform-origin: center center;
+    transform: rotateY(180deg) rotateZ(-60deg);
+
+    .slice{
+      border-top: 1.125em solid transparent;
+      border-right: none;
+      border-bottom: 1em solid transparent;
+      border-left: 1.875em solid #f7484e;
+      position: absolute;
+      top: 0px;
+      left: 50%;
+      transform-origin: left bottom;
+      border-radius: 3px 3px 0 0;
+    }
+
+    @for $i from 1 through 6 {
+      .slice:nth-child(#{$i}) {
+        transform: rotateZ(60* $i + deg) rotateY(0deg) rotateX(0);
+        animation: .15s linear .9 - $i*.08s preload-hide-#{$i} both 1;
+      }
+    }
+
+
+    &.loading{
+      animation: 2s preload-flip steps(2) infinite both;
+      @for $i from 1 through 6 {
+        .slice:nth-child(#{$i}) {
+          transform: rotateZ(60* $i + deg) rotateY(90deg) rotateX(0);
+          animation: 2s preload-cycle-#{$i} linear infinite both;
         }
       }
     }
-  }
 
-  .p-search-month {
-    --placeholder-color: #999999;
-
-    /deep/
-    .select-wrapper {
-      height: 100%;
-
-      input.select-dropdown {
-        color: var(--placeholder-color);
-      }
-
-      svg {
-        display: none;
-      }
-    }
-  }
-
-  .p-search-text {
-    display: flex;
-    align-items: center;
-    input {
-      height: 1.5em;
-      padding: 0 0 10px;
-      margin: 0 0 8px;
-      color: #ffffff;
-      font-family: 'Noto Sans JP', 'Roboto', sans-serif;
-      &::placeholder {
-        color: #999999;
-      }
-
-    }
-    .material-icons {
-      color: #999999;
-    }
   }
 </style>
