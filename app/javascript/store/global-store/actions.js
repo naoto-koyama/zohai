@@ -2,13 +2,10 @@ import { T } from './types'
 import axios from "axios";
 
 export const actions = {
-  [T.LOAD_BRAND_LATEST_DIVIDEND] ({ commit, state }) {
-    axios
-      .get('/api/dividends.json')
-      .then(response => {
-        let total_page = Math.ceil(response.data.length / state.pagenate_slice_no)
-        commit(T.LOAD_BRAND_LATEST_DIVIDEND, { brand_latest_dividends: response.data, total_page: total_page })
-      })
+  async [T.LOAD_BRAND_LATEST_DIVIDEND] ({ commit, state }) {
+    const response = await axios.get('/api/dividends.json')
+    const total_page = Math.ceil(response.data.length / state.pagenate_slice_no)
+    commit(T.LOAD_BRAND_LATEST_DIVIDEND, { brand_latest_dividends: response.data, total_page: total_page })
   },
   [T.GET_DIVIDEND_TREND] ({ commit }, id) {
     axios
