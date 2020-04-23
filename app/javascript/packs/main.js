@@ -7,19 +7,16 @@
 
 import Vue from 'vue'
 import App from '../app.vue'
+import router from '../router'
 import Store  from '../store/store'
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
+    router,
     store: Store,
     render: h => h(App)
   }).$mount()
   document.body.appendChild(app.$el)
-
-  // 参考: https://materializecss.com/select.html
-  M.FormSelect.init(document.querySelectorAll('select'))
-
-  console.log(app)
 })
 
 
