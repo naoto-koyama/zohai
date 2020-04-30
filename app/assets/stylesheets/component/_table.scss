@@ -1,0 +1,71 @@
+@import 'foundation/variables';
+
+table {
+  table-layout: fixed;
+  white-space:nowrap;
+  overflow-x: auto;
+
+  thead > tr {
+    border-bottom: 3px solid rgba(0, 0, 0, 0.12);
+    border-top: 3px solid rgba(0, 0, 0, 0.12);
+    margin: 15px 0;
+  }
+
+  th, td {
+    overflow:hidden;
+    text-overflow: ellipsis;
+  }
+
+  tr {
+    line-height: 0.5;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+    width:100%
+  }
+  table th{
+    background-color: #eee;
+    display: block;
+    border-right: none;
+  }
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    background-color: black;
+  }
+
+  table tr {
+    display: block;
+    margin-bottom: .625em;
+  }
+
+  table td {
+    border-bottom: 1px solid #bbb;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+    position: relative;
+    padding: .625em .625em .625em 4em;
+    border-right: none;
+  }
+
+  table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+}

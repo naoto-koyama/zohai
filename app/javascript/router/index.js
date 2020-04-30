@@ -5,8 +5,12 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    component: () => import('../pages/DividendsIndexPage.vue')
+    path: '/brands',
+    component: () => import('../pages/BrandIndexPage.vue')
+  },
+  {
+    path: '/brands/:id',
+    component: () => import('../pages/BrandDetailPage.vue')
   }
 ]
 

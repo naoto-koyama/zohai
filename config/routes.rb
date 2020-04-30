@@ -3,11 +3,12 @@ require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
   namespace :api do
-    resources :dividends, only: :index
+    resources :brand_latest_dividends, only: :index
     resources :dividend_trends, only: :show
-    resources :stocks, only: :index
+    resources :brands, only: :show
   end
-  root to: 'home#index'
+  root to: redirect('/brands')
+  resources :brands, only: [:index, :show]
 
   mount Sidekiq::Web, at: "/sidekiq"
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::DividendsController, type: :controller do
+RSpec.describe Api::BrandLatestDividendsController, type: :controller do
 
   describe "GET #index" do
     it "returns http success" do
