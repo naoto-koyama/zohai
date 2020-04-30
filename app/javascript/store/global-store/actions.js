@@ -3,48 +3,55 @@ import axios from "axios";
 
 export const actions = {
   async [T.LOAD_BRAND_LATEST_DIVIDEND] ({ commit, state }) {
-    const response = await axios.get('/api/dividends.json')
-    const total_page = Math.ceil(response.data.length / state.pagenate_slice_no)
-    commit(T.LOAD_BRAND_LATEST_DIVIDEND, { brand_latest_dividends: response.data, total_page: total_page })
+    const response = await axios.get('/api/brand_latest_dividends.json')
+    const totalPage = Math.ceil(response.data.length / state.pagenateSliceNo)
+    commit(T.LOAD_BRAND_LATEST_DIVIDEND, { brandLatestDividends: response.data, totalPage: totalPage })
   },
-  [T.GET_DIVIDEND_TREND] ({ commit }, id) {
-    axios
-      .get('/api/dividend_trends/' + id + '.json')
-      .then(response => {
-        commit(T.GET_DIVIDEND_TREND, response.data)
-      })
+  async [T.GET_DIVIDEND_TREND] ({ commit }, id) {
+    const _response = await axios.get(`/api/dividend_trends/${id}.json`)
+    const _dividendTrends = response.data
+    commit(T.GET_DIVIDEND_TREND, _dividendTrends)
   },
-  [T.SORT_BRAND_LATEST_DIVIIEDEND] ({ commit, state }, sort_column) {
-    let sort_order = (sort_column === state.sort_column && state.sort_order === 'asc') ? 'desc' : 'asc'
-    commit(T.SORT_BRAND_LATEST_DIVIIEDEND, { sort_column: sort_column, sort_order: sort_order })
+  async [T.GET_BRAND] ({ commit }, brandId) {
+    const _response = await axios.get(`/api/brands/${brandId}.json`)
+    const _brand = response.data
+    commit(T.GET_BRAND, _brand)
+  },
+  [T.SORT_BRAND_LATEST_DIVIIEDEND] ({ commit, state }, sortColumn) {
+    let sortOrder = (sortColumn === state.sortColumn && state.sortOrder === 'asc') ? 'desc' : 'asc'
+    commit(T.SORT_BRAND_LATEST_DIVIIEDEND, { sortColumn: sortColumn, sortOrder: sortOrder })
   },
   [T.CLOSE_DIVIDEND_TREND] ({ commit }) {
     commit(T.CLOSE_DIVIDEND_TREND)
   },
-  [T.CLICK_PAGENATE] ({ commit }, page_no) {
-    commit(T.CLICK_PAGENATE, page_no)
+  [T.CLICK_PAGENATE] ({ commit }, pageNo) {
+    commit(T.CLICK_PAGENATE, pageNo)
   },
   [T.CLICK_PREV_PAGENATE] ({ commit, state }) {
-    if (state.current_page === 1) return
-      commit(T.CLICK_PAGENATE, state.current_page - 1)
+    if (state.currentPage === 1) return
+      commit(T.CLICK_PAGENATE, state.currentPage - 1)
   },
   [T.CLICK_NEXT_PAGENATE] ({ commit, state }) {
-    if (state.current_page === state.total_page) return
-    commit(T.CLICK_PAGENATE, state.current_page + 1)
+    if (state.currentPage === state.totalPage) return
+    commit(T.CLICK_PAGENATE, state.currentPage + 1)
   },
   [T.CLICK_FIRST_PAGE] ({ commit }) {
     commit(T.CLICK_PAGENATE, 1)
   },
   [T.CLICK_LAST_PAGE] ({ commit, state }) {
-    commit(T.CLICK_PAGENATE, state.total_page)
+    commit(T.CLICK_PAGENATE, state.totalPage)
   },
-  [T.CHANGE_MONTH] ({ commit, state, getters }, search_months) {
-    let total_page = Math.ceil(getters.getFilteredBrandLatestDividends(state.search_text, search_months).length / state.pagenate_slice_no)
-    commit(T.CHANGE_MONTH, { search_months: search_months, total_page: total_page })
+  [T.CHANGE_MONTH] ({ commit, state, getters }, searchMonths) {
+    let totalPage = Math.ceil(getters.getFilteredBrandLatestDividends(state.searchText, searchMonths).length / state.pagenateSliceNo)
+    commit(T.CHANGE_MONTH, { searchMonths: searchMonths, totalPage: totalPage })
   },
-  [T.CHANGE_SEARCH_CHAR] ({ commit, state, getters }, search_text) {
-    let total_page = Math.ceil(getters.getFilteredBrandLatestDividends(search_text, state.search_months).length / state.pagenate_slice_no)
-    commit(T.CHANGE_SEARCH_CHAR, { search_text: search_text, total_page: total_page})
+  [T.CHANGE_SEARCH_CHAR] ({ commit, state, getters }, searchText) {
+    let totalPage = Math.ceil(getters.getFilteredBrandLatestDividends(searchText, state.searchMonths).length / state.pagenateSliceNo)
+    commit(T.CHANGE_SEARCH_CHAR, { searchText: searchText, totalPage: totalPage})
+  },
+  [T.SET_DIVIDEND_TRENDS] ({ commit, dispatch }, dividendId) {
+    dispatch(T.GET_DIVIDEND_TREND(dividendId))
+    dispatch(T.GET_BRAND, dividendId)
   }
 }
 
