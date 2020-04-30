@@ -1,9 +1,9 @@
 export default {
   brandLatestDividends: [],
   dividendTrends: [],
-  dividend: {
-    code: null,
-    name: null
+  brand: {
+    code: '',
+    name: ''
   },
   sortColumn: 'code',
   sortOrder: 'asc',
@@ -12,5 +12,4 @@ export default {
   pagenateSliceNo: 15,
   searchMonths: [],
   searchText: '',
-  loading: true,
 }

@@ -3,18 +3,23 @@ import axios from "axios";
 
 export const actions = {
   async [T.LOAD_BRAND_LATEST_DIVIDEND] ({ commit, state }) {
-    const response = await axios.get('/api/brand_latest_dividends.json')
-    const totalPage = Math.ceil(response.data.length / state.pagenateSliceNo)
-    commit(T.LOAD_BRAND_LATEST_DIVIDEND, { brandLatestDividends: response.data, totalPage: totalPage })
+    const _response = await axios.get('/api/brand_latest_dividends.json')
+    const _brandLatestDividends = _response.data
+    const _totalPage = Math.ceil(_brandLatestDividends.length / state.pagenateSliceNo)
+    commit(T.LOAD_BRAND_LATEST_DIVIDEND, { brandLatestDividends: _brandLatestDividends, totalPage: _totalPage })
   },
-  async [T.GET_DIVIDEND_TREND] ({ commit }, id) {
-    const _response = await axios.get(`/api/dividend_trends/${id}.json`)
-    const _dividendTrends = response.data
-    commit(T.GET_DIVIDEND_TREND, _dividendTrends)
+  [T.LOAD_DIVIDEND_TRENDS] ({ dispatch }, brandCode) {
+    dispatch(T.GET_DIVIDEND_TRENDS, brandCode)
+    dispatch(T.GET_BRAND, brandCode)
   },
-  async [T.GET_BRAND] ({ commit }, brandId) {
-    const _response = await axios.get(`/api/brands/${brandId}.json`)
-    const _brand = response.data
+  async [T.GET_DIVIDEND_TRENDS] ({ commit }, brandCode) {
+    const _response = await axios.get(`/api/dividend_trends/${brandCode}.json`)
+    const _dividendTrends = _response.data
+    commit(T.GET_DIVIDEND_TRENDS, _dividendTrends)
+  },
+  async [T.GET_BRAND] ({ commit }, brandCode) {
+    const _response = await axios.get(`/api/brands/${brandCode}.json`)
+    const _brand = _response.data
     commit(T.GET_BRAND, _brand)
   },
   [T.SORT_BRAND_LATEST_DIVIIEDEND] ({ commit, state }, sortColumn) {
@@ -48,10 +53,6 @@ export const actions = {
   [T.CHANGE_SEARCH_CHAR] ({ commit, state, getters }, searchText) {
     let totalPage = Math.ceil(getters.getFilteredBrandLatestDividends(searchText, state.searchMonths).length / state.pagenateSliceNo)
     commit(T.CHANGE_SEARCH_CHAR, { searchText: searchText, totalPage: totalPage})
-  },
-  [T.SET_DIVIDEND_TRENDS] ({ commit, dispatch }, dividendId) {
-    dispatch(T.GET_DIVIDEND_TREND(dividendId))
-    dispatch(T.GET_BRAND, dividendId)
   }
 }
 

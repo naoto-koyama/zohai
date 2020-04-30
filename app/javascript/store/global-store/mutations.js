@@ -4,10 +4,12 @@ export const mutations = {
   [T.LOAD_BRAND_LATEST_DIVIDEND] (state, { brandLatestDividends, totalPage }) {
     state.brandLatestDividends = brandLatestDividends
     state.totalPage = totalPage
-    state.loading = false
   },
-  [T.GET_DIVIDEND_TREND] (state, dividendTrends) {
+  [T.GET_DIVIDEND_TRENDS] (state, dividendTrends) {
     state.dividendTrends = dividendTrends
+  },
+  [T.GET_BRAND] (state, brand) {
+    state.brand = brand
   },
   [T.SORT_BRAND_LATEST_DIVIIEDEND] (state, { sortColumn, sortOrder }) {
     state.sortColumn = sortColumn
@@ -29,8 +31,5 @@ export const mutations = {
     state.searchText = searchText
     state.totalPage = totalPage
     state.currentPage = 1
-  },
-  [T.GET_BRAND] (state, brand) {
-    state.brand = brand
   }
 }

@@ -7,7 +7,8 @@ Rails.application.routes.draw do
     resources :dividend_trends, only: :show
     resources :brands, only: :show
   end
-  root to: 'home#index'
+  root to: redirect('/brands')
+  resources :brands, only: [:index, :show]
 
   mount Sidekiq::Web, at: "/sidekiq"
 end
