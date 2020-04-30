@@ -17,11 +17,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="dividend_trend in dividendTrends" :v-key="dividend_trend.fiscal_year">
-                  <td>{{formatDateYYYYMM(dividend_trend.fiscal_year)}}</td>
-                  <td>{{dividend_trend.indicated_dividend}}</td>
-                  <td>{{dividend_trend.payout_ratio}} %</td>
-                  <td>{{dividend_trend.continuous_dividend_increase_years}}年</td>
+                <tr v-for="dividendTrend in dividendTrends" :v-key="dividendTrend.fiscal_year">
+                  <td>{{formatDateYYYYMM(dividendTrend.fiscal_year)}}</td>
+                  <td>{{dividendTrend.indicated_dividend}}</td>
+                  <td>{{dividendTrend.payout_ratio}} %</td>
+                  <td>{{dividendTrend.continuous_dividend_increase_years}}年</td>
                 </tr>
               </tbody>
             </table>
@@ -48,12 +48,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      latestDividend: 'getLatestBrandDividend',
+      brand: 'getBrand',
       dividendTrends: 'getDividendTrends',
       loading: 'getLoading'
     }),
     trendListTitle() {
-      return latestDividend.brandCode + ' : ' + latestDividend.brandName
+      return `${brand.code} : ${brand.name}`
     }
   },
   mounted () {

@@ -44,14 +44,14 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="brand_latest_dividend in brandLatestDividends" :key="brand_latest_dividend.id" 　@click="clickBrandName(brand_latest_dividend)" >
-                    <th>{{brand_latest_dividend.name}}</th>
-                    <td data-label="コード">{{brand_latest_dividend.code}}</td>
-                    <td data-label="会計年度">{{formatDateYYYYMM(brand_latest_dividend.fiscal_year)}}</td>
-                    <td data-label="配当金">{{brand_latest_dividend.indicated_dividend}}</td>
-                    <td data-label="配当性向">{{brand_latest_dividend.payout_ratio}} %</td>
-                    <td data-label="連続増配">{{brand_latest_dividend.continuous_dividend_increase_years}}年</td>
-                    <td data-label="前日終値">{{brand_latest_dividend.close_stock_price}}</td>
+                  <tr v-for="brandLatestDividend in brandLatestDividends" :key="brandLatestDividend.id" 　@click="clickBrandName(brandLatestDividend)" >
+                    <th>{{brandLatestDividend.name}}</th>
+                    <td data-label="コード">{{brandLatestDividend.code}}</td>
+                    <td data-label="会計年度">{{formatDateYYYYMM(brandLatestDividend.fiscal_year)}}</td>
+                    <td data-label="配当金">{{brandLatestDividend.indicated_dividend}}</td>
+                    <td data-label="配当性向">{{brandLatestDividend.payout_ratio}} %</td>
+                    <td data-label="連続増配">{{brandLatestDividend.continuous_dividend_increase_years}}年</td>
+                    <td data-label="前日終値">{{brandLatestDividend.close_stock_price}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -134,11 +134,11 @@ export default {
       this.fontColor = this.selectedMonth.length === 0 ? '#999999': '#616161'
       this.CHANGE_MONTH(this.selectedMonth)
     },
-    sort (sort_column) {
-      this.SORT_BRAND_LATEST_DIVIIEDEND(sort_column)
+    sort (sortColumn) {
+      this.SORT_BRAND_LATEST_DIVIIEDEND(sortColumn)
     },
-    clickBrandName(brand_latest_dividend) {
-      this.$router.push(`/dividends/${brand_latest_dividend.id}`)
+    clickBrandName(brandLatestDividend) {
+      this.$router.push(`/dividends/${brandLatestDividend.id}`)
     },
     clickPrev() {
       this.CLICK_PREV_PAGENATE()
