@@ -38,6 +38,7 @@
                 <th :class="orderClass('payout_ratio')" @click="sort('payout_ratio')">配当性向</th>
                 <th :class="orderClass('continuous_dividend_increase_years')" @click="sort('continuous_dividend_increase_years')">連続増配</th>
                 <th :class="orderClass('close_stock_price')" @click="sort('close_stock_price')">前日終値</th>
+                <th :class="orderClass('yield')" @click="sort('yield')">配当利回り</th>
               </tr>
             </thead>
             <tbody>
@@ -49,6 +50,7 @@
                 <td data-label="配当性向">{{brandLatestDividend.payout_ratio}} %</td>
                 <td data-label="連続増配">{{brandLatestDividend.continuous_dividend_increase_years}}年</td>
                 <td data-label="前日終値">{{brandLatestDividend.close_stock_price}}</td>
+                <td data-label="前日終値">{{brandLatestDividend.yield}} %</td>
               </tr>
             </tbody>
           </table>

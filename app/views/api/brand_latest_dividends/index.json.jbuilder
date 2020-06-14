@@ -7,4 +7,5 @@ json.array! @brand_latest_dividends do |brand_latest_dividend|
   json.payout_ratio brand_latest_dividend.dividend.payout_ratio.to_f
   json.continuous_dividend_increase_years brand_latest_dividend.dividend.continuous_dividend_increase_years.to_i
   json.close_stock_price brand_latest_dividend.brand.latest_stock&.close_price
+  json.yield brand_latest_dividend.yield.round(1)
 end
